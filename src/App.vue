@@ -90,6 +90,24 @@
   const url2 = ref('')
   const email = ref('')
   const input_selected = ref('2') // 选中的下拉框
+
+  // 单选框
+  const radio1 = ref('3')
+  const radio2 = ref('b')
+  const radio3 = ref('c')
+  const radio_change = (val) => {
+    console.log("radio change: ", val)
+  }
+  const radio_group_change = (val) => {
+    console.log("radio group change:", val)
+  }
+
+  // 复选框
+  const checked1 = ref(['1', '2'])
+  const checked2 = ref([])
+  const checkbox_group_change = (val) => {
+    console.log("checkbox_group_change: ", val)
+  }
 </script>
 
 <template>
@@ -224,11 +242,11 @@ background-color="#545c64" text-color="#fff" active-text-color="#ffe04b" style="
 <el-input v-model="pwd" show-password placeholder="请输入密码" />
 <h5>文本域</h5>
 <!-- rows="2" 代表初始是 2 行 -->
-<el-input type="textarea" v-model="content" rows="2"/>
+<el-input type="textarea" v-model="content" :rows='2'/>
 <h5>输入内容长度限制 - 输入框</h5> 
 <el-input v-model="name" maxlength="10" show-word-limit/>
 <h5>输入内容长度限制 - 文本域</h5> 
-<el-input type="textarea" v-model="content" rows="3" maxlength="20" show-word-limit/>
+<el-input type="textarea" v-model="content" :rows='3' maxlength="20" show-word-limit/>
 
 <h5>前置</h5>
 <el-input v-model="url1">
@@ -259,6 +277,27 @@ background-color="#545c64" text-color="#fff" active-text-color="#ffe04b" style="
     </template>
 </el-input>
 </div>
+<h5>单选框</h5>
+<el-radio v-model="radio1" value="1">item1</el-radio>
+<el-radio v-model="radio1" value="2">item2</el-radio>
+<el-radio v-model="radio1" value="3">item3</el-radio>
+<h5>单选框 事件绑定</h5>
+<el-radio v-model="radio2" @change="radio_change" value="a">itema</el-radio>
+<el-radio v-model="radio2" @change="radio_change" value="b">itemb</el-radio>
+<el-radio v-model="radio2" @change="radio_change" value="c">itemc</el-radio>
+<h5>单选框组</h5>
+<!-- 单选框组只需要绑定一个 change 事件 -->
+<el-radio-group v-model="radio3" @change="radio_group_change">
+  <el-radio value="A">A item</el-radio>
+  <el-radio value="B">B item</el-radio>
+  <el-radio value="C">C item</el-radio>
+</el-radio-group>
+<h5>复选框</h5>
+<el-checkbox-group v-model="checked2" @change="checkbox_group_change">
+  <el-checkbox value="1">1 item</el-checkbox>
+  <el-checkbox value="2">2 item</el-checkbox>
+  <el-checkbox value="3">3 item</el-checkbox>
+</el-checkbox-group>
 </template>
 <style scoped>
 </style>
