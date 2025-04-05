@@ -1,6 +1,7 @@
 <script setup>
   // 导入消息提示框
   import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
+import { pa } from 'element-plus/es/locales.mjs'
   import { reactive, ref } from 'vue'
   // 消息弹窗
   const open_msg = () => {
@@ -149,6 +150,39 @@
     formdata.multiple_select = [],
     formdata.text_area = ''
   }
+
+  // 对话框
+  const dialog = ref(false)
+  const dialog_close = () => {
+    console.log("close ..")
+  }
+
+  // 分页
+  const handle_current_change = (val) => {
+    console.log("跳转：" + val)
+  }
+
+  // 表格
+  const table_data = reactive([
+    {
+      id: 1001,
+      name: "Tracy",
+      web: 'www.baidu.com',
+      date: '2025-12-31'
+    },
+    {
+      id: 1002,
+      name: "Lucy",
+      web: 'www.bing.com.cn',
+      date: '2024-2-3'
+    },
+    {
+      id: 1003,
+      name: "Tom",
+      web: 'www.sina.com',
+      date: '2025-10-1'
+    }
+  ])
 </script>
 
 <template>
@@ -388,8 +422,52 @@ background-color="#545c64" text-color="#fff" active-text-color="#ffe04b" style="
     <el-button @click="reset_form">重置</el-button>
   </el-form-item>
 </el-form>
-<h5></h5>
-
+<h5>对话框</h5>
+<el-button @click="dialog = true">打开</el-button>
+<!-- draggable 代表可拖动的 -->
+<el-dialog title="标题" v-model="dialog" draggable @close="dialog_close" width="500">
+  <hr>
+  <h5>content is here ... </h5>
+  <h5>you can put a form here ... </h5>
+  <hr>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialog = false">取 消</el-button>
+    <el-button type="primary" @click="dialog = false">确 定</el-button>
+  </span>
+</el-dialog>
+<h5>分页 page-size, total</h5>
+<el-pagination
+  :page-size="20"
+  :total="100"
+  layout="prev, pager, next" />
+<h5>background 显示背景</h5>
+<el-pagination
+  :page-size="20"
+  :total="100"
+  layout="prev, pager, next" background/>
+<h5>total 显示总数</h5>
+<el-pagination
+  :page-size="5"
+  :total="20"
+  layout="prev, pager, next, total" background/>
+<h5>jumper 跳转</h5>
+<el-pagination
+  :page-size="5"
+  :total="20"
+  layout="prev, pager, next, jumper, total" background/>
+<h5>事件绑定</h5>
+<el-pagination
+  :page-size="5"
+  :total="20"
+  @current-change="handle_current_change"
+  layout="prev, pager, next, jumper, total" background/>
+<h5>表格</h5>
+<el-table :data="table_data" style="width: 800px;">
+  <el-table-column prop="id" label="编号" width="80" />
+  <el-table-column prop="name" label="姓名" />
+  <el-table-column prop="web" label="姓名" width="300" />
+  <el-table-column prop="date" label="日期" />
+</el-table>
 </template>
 <style scoped>
 </style>
