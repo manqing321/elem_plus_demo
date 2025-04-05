@@ -1,7 +1,6 @@
 <script setup>
   // 导入消息提示框
   import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
-import { pa } from 'element-plus/es/locales.mjs'
   import { reactive, ref } from 'vue'
   // 消息弹窗
   const open_msg = () => {
@@ -183,6 +182,38 @@ import { pa } from 'element-plus/es/locales.mjs'
       date: '2025-10-1'
     }
   ])
+
+  const table_columns = reactive([
+    {
+      prop: 'id',
+      label: 'ID',
+      width: 100
+    },
+    {
+      prop: 'name',
+      label: '姓名',
+      width: 100
+    },
+    {
+      prop: 'web',
+      label: '网址',
+      width: 100
+    },
+    {
+      prop: 'date',
+    }
+  ])
+  
+  // 表格操作
+  const tab_change = (val) => {
+    console.log("tab change", val)
+  }
+  const handle_table_edit = (idx, val) => {
+    console.log("table edit",idx,  val)
+  }
+  const handle_table_delete = (idx, val) => {
+    console.log("table del",idx, val)
+  }
 </script>
 
 <template>
@@ -462,12 +493,27 @@ background-color="#545c64" text-color="#fff" active-text-color="#ffe04b" style="
   @current-change="handle_current_change"
   layout="prev, pager, next, jumper, total" background/>
 <h5>表格</h5>
-<el-table :data="table_data" style="width: 800px;">
+<!-- height 代表表格高度，单位为 px 设置了之后会固定表头 -->
+<el-table :data="table_data" @selection-change="tab_change" border height="120" style="width: 800px;">
+  <!-- 复选框 -->
+  <el-table-column type="selection" width="50" />
   <el-table-column prop="id" label="编号" width="80" />
   <el-table-column prop="name" label="姓名" />
   <el-table-column prop="web" label="姓名" width="300" />
   <el-table-column prop="date" label="日期" />
+  
+  <el-table-column label="操作" width="150">
+    <template #default="scope">
+      <el-button size="small" type="primary" @click="handle_table_edit(scope.$index, scope.row)">编辑</el-button>
+      <el-button size="small" type="danger" @click="handle_table_delete(scope.$index, scope.row)">删除</el-button>
+    </template>
+  </el-table-column>
 </el-table>
+<el-pagination
+  :page-size="5"
+  :total="20"
+  @current-change="handle_current_change"
+  layout="prev, pager, next, jumper, total" background/>
 </template>
 <style scoped>
 </style>
