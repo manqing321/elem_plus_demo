@@ -108,6 +108,47 @@
   const checkbox_group_change = (val) => {
     console.log("checkbox_group_change: ", val)
   }
+
+  // 下拉框
+  const select_change = (val) => {
+    console.log("select change: ", val)  
+  }
+  // 动态下拉框
+  const selected_item = ref('value2')
+  const selectdata = [
+  { key: "key1", value: "value1", title: "title1" },
+  { key: "key2", value: "value2", title: "title2" },
+  { key: "key3", value: "value3", title: "title3" }]
+
+  // 日期选择器
+  const date1 = ref('')
+  const date2 = ref('')
+  const date3 = ref('')
+  const date4 = ref('')
+  const data_change = (val) => { console.log(val) }
+
+  // 表单
+  const formdata = reactive({
+    name: "",
+    radio: '2',
+    checkbox: ['A', 'B'],
+    date: "",
+    select: "II",
+    multiple_select: [],
+    text_area: ''
+  })
+  const submit_form = () => {
+    console.log(formdata);
+  }
+  const reset_form = () => {
+    formdata.name = "",
+    formdata.radio = '',
+    formdata.checkbox = [],
+    formdata.date = "",
+    formdata.select = "",
+    formdata.multiple_select = [],
+    formdata.text_area = ''
+  }
 </script>
 
 <template>
@@ -118,28 +159,23 @@
 <el-button type="info">信息按钮</el-button>
 <el-button type="warning">警告按钮</el-button>
 <el-button type="danger">危险按钮</el-button>
-<hr>
 <h5>按钮属性</h5>
 <el-button plain>朴素按钮</el-button>
 <el-button round>圆角按钮</el-button>
 <el-button circle>圆</el-button>
 <el-button disabled>禁用按钮</el-button>
 <el-button loading>加载中</el-button>
-<hr>
 <h5>尺寸 size</h5>
 <el-button size="large">大型按钮</el-button>
 <el-button >默认按钮</el-button>
 <el-button size="small">小型按钮</el-button>
-<hr>
 <h5>图标</h5>
 <el-icon><Plus /></el-icon>
 <el-icon><Edit /></el-icon>
 <el-icon><Delete /></el-icon>
 <el-icon class="is-loading"><Loading /></el-icon>
-<hr>
 <h5>属性 有 size 和 color</h5>
 <el-icon size="30" color="red"><Search /></el-icon>
-<hr>
 <h5>组合按钮</h5>
 <el-button type="primary">
     <el-icon ><Search /></el-icon>
@@ -151,7 +187,6 @@
 <el-button circle type="primary">
     <el-icon ><Search /></el-icon>
 </el-button>
-<hr>
 <h5>按钮组</h5>
 <el-button-group>
   <el-button type="primary">
@@ -164,13 +199,11 @@
     <el-icon><Delete /></el-icon>
   </el-button>
 </el-button-group>
-<hr>
 <h5>消息弹窗</h5>
 <el-button @click="open_msg">消息</el-button>
 <el-button @click="open_confirm">确认框</el-button>
 <el-button @click="open_notify">通知</el-button>
 <el-button @click="open_notify2">通知2</el-button>
-<hr>
 <h5>水平导航</h5>
 <!-- mode 默认为纵向，设置为 horizontal 指定为横向 -->
 <!-- :default-active 默认选中的效果 -->
@@ -186,7 +219,6 @@
   <el-menu-item index="3">menu3</el-menu-item>
   <el-menu-item index="4">menu4</el-menu-item>
 </el-menu>
-<hr>
 <h5>水平导航 自定义样式</h5>
 <el-menu mode="horizontal" :default-active="selectedIndex" @select="selected" 
 background-color="#545c64" text-color="#fff" active-text-color="#ffe04b" style="height: 40px; width: 600px;">
@@ -200,14 +232,12 @@ background-color="#545c64" text-color="#fff" active-text-color="#ffe04b" style="
   <el-menu-item index="3">menu3</el-menu-item>
   <el-menu-item index="4">menu4</el-menu-item>
 </el-menu>
-<hr>
 <h5>面包屑 sparator 分隔符</h5>
 <el-breadcrumb sparator="/">
   <el-breadcrumb-item><a href="#">首页</a></el-breadcrumb-item>
   <el-breadcrumb-item>第一节</el-breadcrumb-item>
   <el-breadcrumb-item>第二节</el-breadcrumb-item>
 </el-breadcrumb>
-<hr>
 <h5>下拉菜单</h5>
 <el-dropdown @command="user_command">
   <span>个人中心 <el-icon><User /></el-icon></span>
@@ -218,7 +248,6 @@ background-color="#545c64" text-color="#fff" active-text-color="#ffe04b" style="
     </el-dropdown-menu>
   </template>
 </el-dropdown>
-<hr>
 <h5>标签页</h5>
 <!-- v-model 代表绑定选中的项目，可以增加 type="card" 指定卡片风格， border-card 边框卡片风格-->
 <el-tabs v-model="selected_name" @tab-click="tab_click">
@@ -226,7 +255,6 @@ background-color="#545c64" text-color="#fff" active-text-color="#ffe04b" style="
   <el-tab-pane label="C2" name="2">Content2</el-tab-pane>
   <el-tab-pane label="C3" name="3">Content2</el-tab-pane>
 </el-tabs>
-<hr>
 <h5>动态添加</h5>
 <el-button @click="tab_add">添加</el-button>
 <el-tabs v-model="selected_name" @tab-remove="tab_remove" closable type="card" @tab-click="tab_click">
@@ -298,6 +326,70 @@ background-color="#545c64" text-color="#fff" active-text-color="#ffe04b" style="
   <el-checkbox value="2">2 item</el-checkbox>
   <el-checkbox value="3">3 item</el-checkbox>
 </el-checkbox-group>
+<div style="width: 500px;">
+  <h5>下拉框</h5>
+  <el-select v-model="selected_name" @change="select_change" placeholder="请选择">
+    <el-option label="item1" value="1" />
+    <el-option label="item2" value="2" />
+    <el-option label="item3" value="3" />
+  </el-select>
+  <h5>动态下拉框</h5>
+  <!-- multiple 代表可以多选 -->
+  <el-select multiple v-model="selected_item" @change="select_change" placeholder="请选择">
+    <el-option v-for="val in selectdata" :key="val.name" :label="val.title" :value="val.value" />
+  </el-select>
+</div>
+<h5>日期选择器</h5>
+<el-date-picker v-model="date1" type="date" placeholder="选择日期" />
+<el-date-picker v-model="date2" type="datetime" placeholder="选择日期时间" />
+<el-date-picker v-model="date3" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" @change="data_change" placeholder="选择日期时间" />
+<el-date-picker v-model="date4" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" />
+<h5>表单</h5>
+<el-form label-width="80" style="width: 400px;">
+  <el-form-item label="文本框">
+    <el-input v-model="formdata.name" placeholder="请填写名称" />
+  </el-form-item>
+  <el-form-item value="单选框">
+    <el-radio-group v-model="formdata.radio">
+      <el-radio value="1">item1</el-radio>
+      <el-radio value="2">item2</el-radio>
+      <el-radio value="3">item3</el-radio>
+    </el-radio-group>
+  </el-form-item>
+  <el-form-item label="复选框">
+    <el-checkbox-group v-model="formdata.checkbox">
+      <el-checkbox value="A">itemA</el-checkbox>
+      <el-checkbox value="B">itemB</el-checkbox>
+      <el-checkbox value="C">itemC</el-checkbox>
+    </el-checkbox-group>
+  </el-form-item>
+  <el-form-item label="日期选择">
+    <el-date-picker v-model="formdata.date" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="选择日期" />
+  </el-form-item>
+  <el-form-item label="下拉框">
+    <el-select v-model="formdata.select" placeholder="请选择">
+      <el-option label="itemI" value="I" />
+      <el-option label="itemII" value="II" />
+      <el-option label="itemIII" value="III" />
+    </el-select>
+  </el-form-item>
+  <el-form-item label="多选框">
+    <el-select v-model="formdata.multiple_select" multiple placeholder="请选择">
+      <el-option value="AA" label="AA" />
+      <el-option value="BB" label="BB" />
+      <el-option value="CC" label="CC" />
+    </el-select>
+  </el-form-item>
+  <el-form-item label="文本域">
+    <el-input type="textarea" v-model="formdata.text_area" :rows='2' placeholder="input pls"/>
+  </el-form-item>
+  <el-form-item>
+    <el-button type="primary" @click="submit_form">提交</el-button>
+    <el-button @click="reset_form">重置</el-button>
+  </el-form-item>
+</el-form>
+<h5></h5>
+
 </template>
 <style scoped>
 </style>
